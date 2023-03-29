@@ -73,7 +73,17 @@ dumpHeaders($result['response']);
 
 // Try using the dictionary to decompress the response
 echo "<h2>Step 4 - Verify Dictionary-Compressed Response</h2>\n";
-if (is_file($dict) && is_file($sbr)) {
+// make sure the content-encoding was SBR
+$sbr_transfer = false;
+foreach($result['response'] as $header) {
+  if (strcasecmp($header, 'Content-Encoding: sbr') === 0) {
+    $sbr_transfer = true;
+    break;
+  }
+}
+if (!$sbr_transfer) {
+  echo '<h1>Fail - Content-Encoding was not sbr</h1>';
+} elseif (is_file($dict) && is_file($sbr)) {
   $dec = "$path.dec";
   exec("brotli --decompress -D '$dict' -o '$dec' $sbr");
   if (is_file($dec)) {
