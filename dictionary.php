@@ -16,7 +16,7 @@ if (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'br') !== false) {
   header("Content-Encoding: gzip", true);
   $comp = '.gz';
 }
-$file = __DIR__ . "/bundle.js$comp";
+$file = __DIR__ . "/dictionary.js$comp";
 $filesize = filesize($file);
 header("Content-Length: $filesize", true);
 readfile($file);
