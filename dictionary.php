@@ -8,6 +8,7 @@ header('Cache-Control: public, max-age=2592000', true);
 header('Content-Type: application/javascript; charset=UTF-8', true);
 header('Vary: Accept-Encoding,Sec-Available-Dictionary', true);
 header('Use-As-Dictionary: p="bundle*"', true);
+header("X-Accept-Encoding-Received: {$_SERVER['HTTP_ACCEPT_ENCODING']}", true);
 $comp = '';
 if (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'br') !== false) {
   header("Content-Encoding: br", true);

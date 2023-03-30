@@ -5,6 +5,7 @@ if (!str_ends_with($dir, "/")) {
   $dir = dirname($dir);
 }
 $path = "https://{$_SERVER['HTTP_HOST']}$dir";
+header('Cache-Control: private, no-store, no-cache', true)
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,6 +31,9 @@ $path = "https://{$_SERVER['HTTP_HOST']}$dir";
     <p>
       The test defaults to using pre-prepared shared-brotli resources that are bundled with the test but you can substitute other URLs if there are other resources that you would like to test.
     </p>
+    <p>
+      If you would like to test a CDN's support for passing "sbr" content encoding and varying the cache responses, configure the CDN with this server as a back-end and you should be able to use the same test page on the origin you configure.
+    </p>
     <form action="test.php" method="post">
       <p>
         <label for="dictionary">Dictionary URL:</label><br>
@@ -47,5 +51,15 @@ $path = "https://{$_SERVER['HTTP_HOST']}$dir";
       </p>
       <input type="submit" value="Submit">
     </form>
+    <script>
+    function fixUrl(id) {
+      const e = document.getElementById(id);
+      const url = new URL(e.value);
+      const origin = window.location.origin;
+      e.value = origin + url.pathname + url.search
+    }
+    fixUrl('dictionary');
+    fixUrl('bundle');
+    </script>
   </body>
 </html>

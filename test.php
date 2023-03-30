@@ -3,6 +3,7 @@ $uid = sha1(strval(microtime(true)));
 $dictionary_url = $_REQUEST['dictionary'];
 $bundle_url = $_REQUEST['bundle'];
 $path = __DIR__ . "/data/$uid";
+header('Cache-Control: private, no-store, no-cache', true)
 ?>
 <!DOCTYPE html>
 <html>
